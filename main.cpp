@@ -1,5 +1,3 @@
-// INIParser.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
 
 #include <iostream>
 #include <vector>
@@ -63,8 +61,7 @@ private:
 
         regex regular_param("([\\w]+)"
                             "(\x20=\x20)"
-                            "([\\w.]+)"//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Исправить, чтобы считывал все до ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                           //"([;]?[\\w]+)"
+                            "([\\w.]+)"
         );
 
         while (getline(ifile, line)) {
@@ -162,8 +159,5 @@ int  main(int argc, char* argv[])
 
     }
 
-   // cout << "Parameter: "
-   // cout << "Parameter: " << cl.getFloatParam("sgh", "Hello") <<endl;
-   // cout << "Parameter: " << cl.getStringParam("sgh", "Hello") <<endl;
 }
 
