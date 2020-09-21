@@ -22,38 +22,18 @@ public:
     int getIntParam(string name){return atoi(params[name].c_str());}
     float getFloatParam(string name){return stof(params[name].c_str());}
     string getStringParam(string name){return params[name];}
-    /*
-     *
-     * Попробовал сделать через шаблоны - не вышло, вопрос - как сделать через них?
-    template<typename T>
-    T getParam(string name){}
-
-    template<>
-    string getParam(string name){return params[name];}
-
-    template<>
-    int getParam(string name){return atoi(params[name].c_str());}
-
-    template<>
-    double getParam(string name){return stof(params[name].c_str());}
-
-*/
-
-
-
 };
 
 
 class INIFile {
 private:
     string location;
-    ifstream ifile;
+
     vector<INISection> sections;
-    //unordered_map<string, INISection> sections;
-    void openFile() {
+public:
+    INIFile(string location) : location(location){
+        ifstream ifile;
         ifile = ifstream(location);
-    }
-    void getParams() {
         string line;
         cmatch result;// [name]
         regex regular("([\[])"
@@ -61,7 +41,7 @@ private:
 
         regex regular_param("([\\w]+)"
                             "(\x20=\x20)"
-                            "([\\w.]+)"
+                            "([^;]+)"
         );
 
         while (getline(ifile, line)) {
@@ -74,17 +54,8 @@ private:
                 }
                 sections.push_back(new_section);
             }
-
-
         }
-    }
 
-
-
-public:
-    INIFile(string location) : location(location){
-        openFile();
-        getParams();
     }
     int getIntParam(string parameter_name, string section_name){
         for(vector<INISection>::iterator iter = sections.begin(); iter != sections.end(); iter++){
@@ -108,12 +79,7 @@ public:
         cout << "No mathes\n";
         throw("No mathes");
     }
-    /*
-    template <typename T>
-    T getParam(string parameter_name, string section_name){
-        return sections[section_name].getParam<T>(parameter_name);
 
-    }*/
 
 
 };
@@ -123,7 +89,7 @@ public:
 
 
 int  main(int argc, char* argv[])
-{//Переделать специализацией
+{
     string command;
     cin >> command;
     while(command != "exit"){
@@ -155,9 +121,6 @@ int  main(int argc, char* argv[])
             cout << "Write command(get, open, exit): ";
         }
         cin >> command;
-
-
     }
-
 }
 
